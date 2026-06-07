@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>After World — Character Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c8a96e;
+    --gold-light: #e8cfa0;
+    --gold-dark: #8a6a30;
+    --bg-deep: #0a0a0c;
+    --bg-card: #111118;
+    --bg-panel: #16161e;
+    --bg-input: #0d0d14;
+    --border: #2a2a3a;
+    --border-gold: rgba(200,169,110,0.3);
+    --text: #d4c9b8;
+    --text-dim: #7a7060;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --brawn: #c0392b;
+    --agility: #7f8c8d;
+    --health: #27ae60;
+    --smarts: #2980b9;
+    --senses: #2ecc71;
+    --presence: #8e44ad;
+    --glow: 0 0 20px rgba(200,169,110,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(200,169,110,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(100,50,150,0.04) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230a0a0c'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23ffffff08'/%3E%3C/svg%3E");
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    padding: 2rem 1rem 1.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-gold);
+    background: linear-gradient(180deg, rgba(200,169,110,0.06) 0%, transparent 100%);
+  }
+  header::before, header::after {
+    content: '◈';
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    color: var(--gold-dark);
+    font-size: 1.4rem;
+    opacity: 0.5;
+  }
+  header::before { left: 2rem; }
+  header::after  { right: 2rem; }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(200,169,110,0.4), 0 2px 4px rgba(0,0,0,0.8);
+    line-height: 1;
+  }
+  .logo span { color: var(--text-dim); font-weight: 400; font-size: 0.5em; letter-spacing: 0.4em; display: block; margin-top: 0.3em; }
+
+  /* ── LAYOUT ── */
+  .sheet {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* ── PANELS ── */
+  .panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem;
+    position: relative;
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, rgba(200,169,110,0.1), transparent 50%) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .panel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .panel-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-gold), transparent);
+  }
+
+  /* ── INPUTS ── */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .field label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  input[type="text"], input[type="number"], textarea, select {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--gold-dark);
+    box-shadow: 0 0 0 2px rgba(200,169,110,0.1);
+  }
+  input[type="number"] { text-align: center; }
+  textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+  select { cursor: pointer; }
+  select option { background: var(--bg-card); }
+
+  /* ── IDENTITY GRID ── */
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+  @media (max-width: 600px) {
+    .identity-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── ATTRIBUTES ── */
+  .attrs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  @media (max-width: 500px) {
+    .attrs-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .attr-card {
+    background: var(--bg-card);
+    border-radius: 4px;
+    padding: 0.75rem;
+    border-left: 3px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: border-color 0.2s;
+  }
+  .attr-card[data-attr="brawn"]    { border-color: var(--brawn); }
+  .attr-card[data-attr="agility"]  { border-color: var(--agility); }
+  .attr-card[data-attr="health"]   { border-color: var(--health); }
+  .attr-card[data-attr="smarts"]   { border-color: var(--smarts); }
+  .attr-card[data-attr="senses"]   { border-color: var(--senses); }
+  .attr-card[data-attr="presence"] { border-color: var(--presence); }
+
+  .attr-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .attr-card[data-attr="brawn"]    .attr-name { color: var(--brawn); }
+  .attr-card[data-attr="agility"]  .attr-name { color: var(--agility); }
+  .attr-card[data-attr="health"]   .attr-name { color: var(--health); }
+  .attr-card[data-attr="smarts"]   .attr-name { color: var(--smarts); }
+  .attr-card[data-attr="senses"]   .attr-name { color: var(--senses); }
+  .attr-card[data-attr="presence"] .attr-name { color: var(--presence); }
+
+  .rank-pips {
+    display: flex;
+    gap: 5px;
+  }
+  .pip {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg-input);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    position: relative;
+  }
+  .pip:hover { transform: scale(1.15); }
+  .pip.filled { border-color: currentColor; background: currentColor; }
+  .attr-card[data-attr="brawn"]    .pip.filled { background: var(--brawn); border-color: var(--brawn); }
+  .attr-card[data-attr="agility"]  .pip.filled { background: var(--agility); border-color: var(--agility); }
+  .attr-card[data-attr="health"]   .pip.filled { background: var(--health); border-color: var(--health); }
+  .attr-card[data-attr="smarts"]   .pip.filled { background: var(--smarts); border-color: var(--smarts); }
+  .attr-card[data-attr="senses"]   .pip.filled { background: var(--senses); border-color: var(--senses); }
+  .attr-card[data-attr="presence"] .pip.filled { background: var(--presence); border-color: var(--presence); }
+
+  .attr-die {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    min-height: 1.2em;
+  }
+  .rank-total {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 0.2rem;
+  }
+  .rank-total span { color: var(--gold); font-weight: 600; }
+
+  /* ── VITALS ROW ── */
+  .vitals-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+  @media (max-width: 500px) {
+    .vitals-row { grid-template-columns: 1fr 1fr; }
+  }
+
+  .vital-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.75rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .vital-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .vital-value {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .vital-sub {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* HP display */
+  .hp-display {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .hp-display input {
+    width: 55px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-align: center;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border-gold);
+    border-radius: 0;
+    padding: 0.1rem;
+  }
+  .hp-display input:focus { outline: none; border-color: var(--gold); }
+  .hp-sep { color: var(--text-dim); font-size: 1.2rem; }
+  .hp-max { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--text-dim); }
+
+  /* ── WOUNDS ── */
+  .wounds-row {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 0.3rem;
+  }
+  .wound-circle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--red);
+    cursor: pointer;
+    background: transparent;
+    transition: background 0.15s, transform 0.1s;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: transparent;
+  }
+  .wound-circle.taken {
+    background: var(--red);
+    color: white;
+  }
+  .wound-circle:hover { transform: scale(1.1); }
+
+  /* ── DEATH ROLLS ── */
+  .death-rolls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .roll-group { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .roll-label { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .roll-label.pass { color: #27ae60; }
+  .roll-label.fail { color: var(--red); }
+  .roll-pips { display: flex; gap: 5px; }
+  .roll-pip {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .roll-pip:hover { transform: scale(1.1); }
+  .roll-pip.pass-filled { background: #27ae60; border-color: #27ae60; }
+  .roll-pip.fail-filled { background: var(--red); border-color: var(--red); }
+
+  /* ── BOTTOM COLUMNS ── */
+  .bottom-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 600px) {
+    .bottom-cols { grid-template-columns: 1fr; }
+  }
+
+  /* ── TRAITS & EQUIPMENT LISTS ── */
+  .list-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.4rem 0.6rem;
+    transition: border-color 0.2s;
+  }
+  .list-item:focus-within { border-color: var(--gold-dark); }
+  .list-item input {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    flex: 1;
+    padding: 0;
+  }
+  .list-item input:focus { outline: none; }
+  .list-item input::placeholder { color: var(--text-dim); font-style: italic; }
+  .item-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold-dark);
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+  .add-btn {
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 3px;
+    color: var(--text-dim);
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    padding: 0.4rem;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s;
+    width: 100%;
+  }
+  .add-btn:hover { border-color: var(--gold-dark); color: var(--gold); }
+
+  /* ── ARMOUR SECTION ── */
+  .armour-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 0.75rem;
+    align-items: end;
+  }
+
+  /* ── NOTES ── */
+  .notes-area textarea {
+    font-size: 0.95rem;
+    min-height: 80px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── SAVE BUTTON ── */
+  .save-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.8rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--gold-dark);
+    background: transparent;
+    color: var(--gold);
+  }
+  .btn:hover {
+    background: rgba(200,169,110,0.1);
+    box-shadow: 0 0 20px rgba(200,169,110,0.2);
+  }
+  .btn.danger {
+    border-color: var(--red);
+    color: var(--red-light);
+  }
+  .btn.danger:hover { background: rgba(192,57,43,0.1); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    color: var(--gold-dark);
+    font-size: 0.8rem;
+    letter-spacing: 0.5em;
+    opacity: 0.4;
+    padding: 0.2rem 0;
+  }
+
+  /* ── CD FORMULA ── */
+  .cd-formula {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: italic;
+    text-align: center;
+    margin-top: 0.3rem;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%) translateY(4rem);
+    background: var(--bg-panel);
+    border: 1px solid var(--gold-dark);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    padding: 0.7rem 1.5rem;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ── TRAINING TAGS ── */
+  .training-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .tag {
+    background: rgba(200,169,110,0.08);
+    border: 1px solid var(--border-gold);
+    border-radius: 2px;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.3rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .tag:hover { background: rgba(200,169,110,0.15); }
+  .tag .tag-x { color: var(--red-light); font-size: 0.75rem; }
+  .tag-input-row {
+    display: flex; gap: 0.4rem;
+  }
+  .tag-input-row input { flex: 1; }
+  .tag-add {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--gold-dark);
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .tag-add:hover { color: var(--gold); border-color: var(--gold-dark); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">After World <span>Core Rulebook · Character Sheet</span></div>
+</header>
+
+<div class="sheet">
+
+  <!-- IDENTITY -->
+  <div class="panel">
+    <div class="panel-title">Identity</div>
+    <div class="identity-grid">
+      <div class="field">
+        <label>Character Name</label>
+        <input type="text" id="charName" placeholder="Enter name…">
+      </div>
+      <div class="field">
+        <label>Race</label>
+        <input type="text" id="charRace" placeholder="e.g. Wood Elf">
+      </div>
+      <div class="field">
+        <label>Background</label>
+        <input type="text" id="charBackground" placeholder="e.g. Hunter">
+      </div>
+      <div class="field">
+        <label>Level</label>
+        <input type="number" id="charLevel" min="1" max="20" value="1" oninput="updateDerived()">
+      </div>
+    </div>
+    <div style="margin-top:0.75rem; display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+      <div class="field">
+        <label>Languages</label>
+        <input type="text" id="charLanguages" placeholder="Common, Elvish…">
+      </div>
+      <div class="field">
+        <label>Money</label>
+        <input type="text" id="charMoney" placeholder="0 gold">
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRIBUTES -->
+  <div class="panel">
+    <div class="panel-title">Attributes — 10 ranks to distribute (max 4 per attribute)</div>
+    <div class="attrs-grid" id="attrsGrid"></div>
+    <div class="rank-total" id="rankTotal">Ranks used: <span>0</span> / 10</div>
+  </div>
+
+  <!-- VITALS -->
+  <div class="panel">
+    <div class="panel-title">Vitals</div>
+    <div class="vitals-row">
+
+      <!-- HP -->
+      <div class="vital-box">
+        <div class="vital-label">Hit Points</div>
+        <div class="hp-display">
+          <input type="number" id="hpCurrent" value="10" min="0" style="">
+          <span class="hp-sep">/</span>
+          <span class="hp-max" id="hpMax">10</span>
+        </div>
+        <div class="vital-sub" id="hpFormula">Health rank × 5</div>
+        <div style="margin-top:0.5rem;">
+          <label style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;display:flex;align-items:center;gap:0.4rem;">
+            <input type="checkbox" id="hasHealthyTrait" onchange="updateDerived()" style="width:auto;accent-color:var(--gold)"> Healthy Trait
+          </label>
+        </div>
+      </div>
+
+      <!-- Combat Defence -->
+      <div class="vital-box">
+        <div class="vital-label">Combat Defence</div>
+        <div class="vital-value" id="cdValue">12</div>
+        <div class="vital-sub">12 + Agility − Armour Penalty</div>
+        <div class="cd-formula" id="cdFormula">No armour worn</div>
+      </div>
+
+      <!-- Carry Weight -->
+      <div class="vital-box">
+        <div class="vital-label">Carry Weight</div>
+        <div class="vital-value" id="carryValue">0</div>
+        <div class="vital-sub">Brawn rank × 5</div>
+        <div class="cd-formula">L=1  M=3  H=6</div>
+      </div>
+
+    </div>
+
+    <!-- Fatigue -->
+    <div style="margin-top:1rem;">
+      <div class="panel-title" style="margin-bottom:0.5rem;">Fatigue</div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <div id="fatigueRow" style="display:flex;gap:0.5rem;"></div>
+      </div>
+      <div id="fatigueDesc" style="font-size:0.85rem;color:var(--red-light);margin-top:0.4rem;font-style:italic;min-height:1.2em;"></div>
+    </div>
+  </div>
+
+  <!-- WOUNDS & DEATH -->
+  <div class="panel">
+    <div class="panel-title">Wounds &amp; Death Rolls</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div>
+        <div class="vital-label" style="text-align:center;margin-bottom:0.6rem;">Wounds (max 3)</div>
+        <div class="wounds-row" id="woundsRow"></div>
+        <div id="woundDesc" style="text-align:center;font-size:0.8rem;color:var(--red-light);margin-top:0.4rem;font-style:italic;min-height:1.2em;"></div>
+      </div>
+      <div>
+        <div class="vital-label" style="text-align:center;margin-bottom:0.6rem;">Death Rolls (at 0 HP)</div>
+        <div class="death-rolls">
+          <div class="roll-group">
+            <div class="roll-label pass">Pass</div>
+            <div class="roll-pips" id="passRolls"></div>
+          </div>
+          <div class="roll-group">
+            <div class="roll-label fail">Fail</div>
+            <div class="roll-pips" id="failRolls"></div>
+          </div>
+        </div>
+        <div style="font-size:0.75rem;color:var(--text-dim);text-align:center;margin-top:0.5rem;font-style:italic;">Roll 1d6 × 3 &nbsp;·&nbsp; above 3 = pass &nbsp;·&nbsp; below 3 = fail</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARMOUR -->
+  <div class="panel">
+    <div class="panel-title">Armour</div>
+    <div class="armour-grid">
+      <div class="field">
+        <label>Armour Name</label>
+        <input type="text" id="armourName" placeholder="e.g. Leather Armour" oninput="syncArmour()">
+      </div>
+      <div class="field">
+        <label>Profile</label>
+        <select id="armourProfile" onchange="syncArmour()">
+          <option value="none">None (0/0/0)</option>
+          <option value="light1">Light Armour (R:1 P:-1 B:0)</option>
+          <option value="light2">Reinforced (R:2 P:-2 B:0)</option>
+          <option value="medium">Balanced (R:3 P:-2 B:1)</option>
+          <option value="heavy1">Heavy (R:4 P:-3 B:1)</option>
+          <option value="heavy2">Full Armour (R:5 P:-3 B:2)</option>
+          <option value="powered">Powered (R:5 P:-3 B:0)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Durability</label>
+        <select id="armourDurability">
+          <option value="2">Full (2)</option>
+          <option value="1">Damaged (1)</option>
+          <option value="0">Broken (0)</option>
+        </select>
+      </div>
+    </div>
+    <div id="armourStats" style="margin-top:0.6rem;font-size:0.85rem;color:var(--text-dim);font-style:italic;"></div>
+  </div>
+
+  <!-- TRAITS & EQUIPMENT -->
+  <div class="bottom-cols">
+    <div class="panel">
+      <div class="panel-title">Traits</div>
+      <div class="list-area" id="traitsList"></div>
+      <button class="add-btn" onclick="addItem('traits')">+ Add Trait</button>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Equipment</div>
+      <div class="list-area" id="equipList"></div>
+      <button class="add-btn" onclick="addItem('equip')">+ Add Item</button>
+    </div>
+  </div>
+
+  <!-- TRAINING -->
+  <div class="panel">
+    <div class="panel-title">Training (from Background)</div>
+    <div class="training-tags" id="trainingTags"></div>
+    <div class="tag-input-row">
+      <input type="text" id="trainingInput" placeholder="Add training skill…" onkeydown="if(event.key==='Enter')addTag()">
+      <button class="tag-add" onclick="addTag()">Add</button>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="panel">
+    <div class="panel-title">Notes &amp; Backstory</div>
+    <div class="notes-area">
+      <textarea id="charNotes" placeholder="Character backstory, GM notes, spells, powers…"></textarea>
+    </div>
+  </div>
+
+  <!-- SAVE -->
+  <div class="save-row">
+    <button class="btn" onclick="saveSheet()">⊕ Save Character</button>
+    <button class="btn danger" onclick="clearSheet()">✕ Clear All</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const ATTRS = [
+  { id:'brawn',    label:'Brawn',    hint:'Strength rolls' },
+  { id:'agility',  label:'Agility',  hint:'Speed & evasion' },
+  { id:'health',   label:'Health',   hint:'Endurance & HP' },
+  { id:'smarts',   label:'Smarts',   hint:'Knowledge & craft' },
+  { id:'senses',   label:'Senses',   hint:'Perception' },
+  { id:'presence', label:'Presence', hint:'Social & perform' },
+];
+const DIES = ['—','d4','d6','d8','d12'];
+const ARMOUR_PROFILES = {
+  none:    { rating:0, penalty:0, bulk:0 },
+  light1:  { rating:1, penalty:-1, bulk:0 },
+  light2:  { rating:2, penalty:-2, bulk:0 },
+  medium:  { rating:3, penalty:-2, bulk:1 },
+  heavy1:  { rating:4, penalty:-3, bulk:1 },
+  heavy2:  { rating:5, penalty:-3, bulk:2 },
+  powered: { rating:5, penalty:-3, bulk:0 },
+};
+const FATIGUE_EFFECTS = [
+  '',
+  'Disadvantage on ability rolls.',
+  'Speed halved.',
+  'Disadvantage on ALL rolls.',
+  'HP max halved.',
+  'No movement, opportunity, surprise or interactions.',
+  '☠ Death.',
+];
+
+let ranks = { brawn:0, agility:0, health:0, smarts:0, senses:0, presence:0 };
+let wounds = 0;
+let deathPass = 0, deathFail = 0;
+let fatigue = 0;
+let traits = ['','',''];
+let equip  = ['','',''];
+let trainingTags = [];
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.onload = () => {
+  buildAttrs();
+  buildWounds();
+  buildDeathRolls();
+  buildFatigue();
+  buildTraits();
+  buildEquip();
+  loadSheet();
+  updateDerived();
+  syncArmour();
+};
+
+// ─── ATTRS ───────────────────────────────────────────────────────────────────
+function buildAttrs() {
+  const grid = document.getElementById('attrsGrid');
+  grid.innerHTML = '';
+  ATTRS.forEach(attr => {
+    const card = document.createElement('div');
+    card.className = 'attr-card';
+    card.dataset.attr = attr.id;
+    card.innerHTML = `
+      <div class="attr-name">${attr.label}</div>
+      <div style="font-size:0.7rem;color:var(--text-dim);font-style:italic;">${attr.hint}</div>
+      <div class="rank-pips" id="pips-${attr.id}"></div>
+      <div class="attr-die" id="die-${attr.id}">—</div>
+    `;
+    grid.appendChild(card);
+    for(let i=1;i<=4;i++){
+      const pip = document.createElement('div');
+      pip.className = 'pip';
+      pip.dataset.rank = i;
+      pip.title = `Rank ${i}`;
+      pip.onclick = () => setRank(attr.id, i);
+      document.getElementById(`pips-${attr.id}`).appendChild(pip);
+    }
+  });
+}
+
+function setRank(attrId, rank) {
+  // click same rank = clear to 0
+  if(ranks[attrId] === rank) rank = 0;
+  ranks[attrId] = rank;
+  refreshPips(attrId);
+  updateDerived();
+}
+
+function refreshPips(attrId) {
+  const r = ranks[attrId];
+  const pips = document.querySelectorAll(`#pips-${attrId} .pip`);
+  pips.forEach(p => p.classList.toggle('filled', parseInt(p.dataset.rank) <= r));
+  document.getElementById(`die-${attrId}`).textContent = DIES[r] || '—';
+}
+
+// ─── DERIVED ─────────────────────────────────────────────────────────────────
+function updateDerived() {
+  const totalRanks = Object.values(ranks).reduce((a,b)=>a+b,0);
+  const el = document.getElementById('rankTotal');
+  el.innerHTML = `Ranks used: <span style="color:${totalRanks>10?'var(--red-light)':'var(--gold)'}">${totalRanks}</span> / 10`;
+
+  // HP
+  const hR = ranks.health;
+  let maxHp = hR * 5;
+  const hasHealthy = document.getElementById('hasHealthyTrait').checked;
+  const hpFormulas = ['0','5 (Rank 1)','10 (Rank 2)','15 (Rank 3)','20 (Rank 4)'];
+  if(hasHealthy) {
+    const bonuses = [0,4,6,8,12];
+    maxHp += bonuses[hR] || 0;
+    const level = parseInt(document.getElementById('charLevel').value)||1;
+    if(level > 1) maxHp += (level-1);
+  }
+  document.getElementById('hpMax').textContent = maxHp;
+  document.getElementById('hpFormula').textContent = hasHealthy ? `${hpFormulas[hR]} + Healthy bonus` : `Health rank × 5`;
+
+  // CD
+  const profile = ARMOUR_PROFILES[document.getElementById('armourProfile')?.value || 'none'];
+  const cd = 12 + ranks.agility + (profile ? profile.penalty : 0);
+  document.getElementById('cdValue').textContent = cd;
+  document.getElementById('cdFormula').textContent = profile
+    ? `12 + ${ranks.agility} (Agi) ${profile.penalty} (armour) = ${cd}`
+    : `12 + ${ranks.agility} (Agi) = ${cd}`;
+
+  // Carry
+  document.getElementById('carryValue').textContent = ranks.brawn * 5;
+}
+
+// ─── ARMOUR ──────────────────────────────────────────────────────────────────
+function syncArmour() {
+  const key = document.getElementById('armourProfile').value;
+  const p = ARMOUR_PROFILES[key];
+  document.getElementById('armourStats').textContent =
+    `Rating: ${p.rating}  ·  Penalty: ${p.penalty}  ·  Bulk: ${p.bulk}${p.bulk?' zone(s) speed reduction':''}`;
+  updateDerived();
+}
+
+// ─── WOUNDS ──────────────────────────────────────────────────────────────────
+function buildWounds() {
+  const row = document.getElementById('woundsRow');
+  row.innerHTML = '';
+  for(let i=1;i<=3;i++){
+    const c = document.createElement('div');
+    c.className = 'wound-circle';
+    c.title = `Wound ${i}`;
+    c.innerHTML = '✕';
+    c.dataset.wound = i;
+    c.onclick = () => toggleWound(i);
+    row.appendChild(c);
+  }
+}
+function toggleWound(n) {
+  wounds = wounds === n ? n-1 : n;
+  document.querySelectorAll('.wound-circle').forEach(c => {
+    c.classList.toggle('taken', parseInt(c.dataset.wound) <= wounds);
+  });
+  const msgs = ['','−1 rank to all attributes.','−2 ranks to all attributes.','−3 ranks to all attributes. On the brink of death.'];
+  document.getElementById('woundDesc').textContent = msgs[wounds]||'';
+}
+
+// ─── DEATH ROLLS ─────────────────────────────────────────────────────────────
+function buildDeathRolls() {
+  buildRollPips('passRolls','pass');
+  buildRollPips('failRolls','fail');
+}
+function buildRollPips(containerId, type) {
+  const c = document.getElementById(containerId);
+  c.innerHTML='';
+  for(let i=1;i<=3;i++){
+    const p = document.createElement('div');
+    p.className = 'roll-pip';
+    p.dataset.roll = i;
+    p.dataset.type = type;
+    p.onclick = () => toggleRollPip(type, i);
+    c.appendChild(p);
+  }
+}
+function toggleRollPip(type, n) {
+  if(type==='pass') { deathPass = deathPass===n ? n-1 : n; }
+  else { deathFail = deathFail===n ? n-1 : n; }
+  document.querySelectorAll(`[data-type="${type}"]`).forEach(p => {
+    const cls = type+'-filled';
+    p.classList.toggle(cls, parseInt(p.dataset.roll) <= (type==='pass'?deathPass:deathFail));
+  });
+}
+
+// ─── FATIGUE ─────────────────────────────────────────────────────────────────
+function buildFatigue() {
+  const row = document.getElementById('fatigueRow');
+  row.innerHTML='';
+  for(let i=1;i<=6;i++){
+    const b = document.createElement('div');
+    b.className = 'wound-circle';
+    b.style.cssText = 'width:28px;height:28px;font-size:0.75rem;border-color:var(--gold-dark);';
+    b.textContent = i;
+    b.dataset.f = i;
+    b.onclick = () => setFatigue(i);
+    row.appendChild(b);
+  }
+}
+function setFatigue(n) {
+  fatigue = fatigue===n ? n-1 : n;
+  document.querySelectorAll('[data-f]').forEach(b => {
+    const filled = parseInt(b.dataset.f) <= fatigue;
+    b.style.background = filled ? 'rgba(200,169,110,0.4)' : 'transparent';
+    b.style.color = filled ? 'var(--gold)' : 'var(--text-dim)';
+    b.style.borderColor = filled ? 'var(--gold)' : 'var(--gold-dark)';
+  });
+  document.getElementById('fatigueDesc').textContent = FATIGUE_EFFECTS[fatigue]||'';
+}
+
+// ─── TRAITS / EQUIP ──────────────────────────────────────────────────────────
+function buildTraits() {
+  const area = document.getElementById('traitsList');
+  area.innerHTML='';
+  traits.forEach((t,i) => {
+    const div = document.createElement('div');
+    div.className='list-item';
+    div.innerHTML=`<div class="item-dot"></div><input type="text" value="${t}" placeholder="Trait name…" oninput="traits[${i}]=this.value">`;
+    area.appendChild(div);
+  });
+}
+function buildEquip() {
+  const area = document.getElementById('equipList');
+  area.innerHTML='';
+  equip.forEach((e,i) => {
+    const div = document.createElement('div');
+    div.className='list-item';
+    div.innerHTML=`<div class="item-dot"></div><input type="text" value="${e}" placeholder="Item…" oninput="equip[${i}]=this.value">`;
+    area.appendChild(div);
+  });
+}
+function addItem(type) {
+  if(type==='traits') { traits.push(''); buildTraits(); }
+  else { equip.push(''); buildEquip(); }
+}
+
+// ─── TRAINING TAGS ───────────────────────────────────────────────────────────
+function renderTags() {
+  const area = document.getElementById('trainingTags');
+  area.innerHTML='';
+  trainingTags.forEach((t,i)=>{
+    const tag = document.createElement('div');
+    tag.className='tag';
+    tag.innerHTML=`${t} <span class="tag-x" onclick="removeTag(${i})">✕</span>`;
+    area.appendChild(tag);
+  });
+}
+function addTag() {
+  const inp = document.getElementById('trainingInput');
+  const val = inp.value.trim();
+  if(val){ trainingTags.push(val); inp.value=''; renderTags(); }
+}
+function removeTag(i) { trainingTags.splice(i,1); renderTags(); }
+
+// ─── SAVE / LOAD ─────────────────────────────────────────────────────────────
+function gatherData() {
+  // re-sync list inputs
+  document.querySelectorAll('#traitsList input').forEach((inp,i)=>{ traits[i]=inp.value; });
+  document.querySelectorAll('#equipList input').forEach((inp,i)=>{ equip[i]=inp.value; });
+  return {
+    name: document.getElementById('charName').value,
+    race: document.getElementById('charRace').value,
+    background: document.getElementById('charBackground').value,
+    level: document.getElementById('charLevel').value,
+    languages: document.getElementById('charLanguages').value,
+    money: document.getElementById('charMoney').value,
+    ranks, wounds, deathPass, deathFail, fatigue,
+    traits, equip, trainingTags,
+    hpCurrent: document.getElementById('hpCurrent').value,
+    hasHealthy: document.getElementById('hasHealthyTrait').checked,
+    armourProfile: document.getElementById('armourProfile').value,
+    armourName: document.getElementById('armourName').value,
+    armourDur: document.getElementById('armourDurability').value,
+    notes: document.getElementById('charNotes').value,
+  };
+}
+
+function saveSheet() {
+  const data = gatherData();
+  localStorage.setItem('aw_character', JSON.stringify(data));
+  showToast('Character saved ◈');
+}
+
+function loadSheet() {
+  const raw = localStorage.getItem('aw_character');
+  if(!raw) return;
+  try {
+    const d = JSON.parse(raw);
+    document.getElementById('charName').value = d.name||'';
+    document.getElementById('charRace').value = d.race||'';
+    document.getElementById('charBackground').value = d.background||'';
+    document.getElementById('charLevel').value = d.level||1;
+    document.getElementById('charLanguages').value = d.languages||'';
+    document.getElementById('charMoney').value = d.money||'';
+    document.getElementById('hpCurrent').value = d.hpCurrent||10;
+    document.getElementById('hasHealthyTrait').checked = d.hasHealthy||false;
+    document.getElementById('armourProfile').value = d.armourProfile||'none';
+    document.getElementById('armourName').value = d.armourName||'';
+    document.getElementById('armourDurability').value = d.armourDur||'2';
+    document.getElementById('charNotes').value = d.notes||'';
+    if(d.ranks) { ranks = d.ranks; ATTRS.forEach(a=>refreshPips(a.id)); }
+    if(d.traits) { traits = d.traits; buildTraits(); }
+    if(d.equip)  { equip  = d.equip;  buildEquip(); }
+    if(d.trainingTags) { trainingTags = d.trainingTags; renderTags(); }
+    wounds = d.wounds||0; toggleWound(wounds); if(!wounds){document.querySelectorAll('.wound-circle').forEach(c=>c.classList.remove('taken'));document.getElementById('woundDesc').textContent='';}
+    deathPass = d.deathPass||0; for(let i=1;i<=deathPass;i++) toggleRollPip('pass',i);
+    deathFail = d.deathFail||0; for(let i=1;i<=deathFail;i++) toggleRollPip('fail',i);
+    fatigue = d.fatigue||0; if(fatigue) setFatigue(fatigue); else setFatigue(0);
+    syncArmour();
+  } catch(e) { /* ignore corrupt save */ }
+}
+
+function clearSheet() {
+  if(!confirm('Clear all character data?')) return;
+  localStorage.removeItem('aw_character');
+  location.reload();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+</script>
+</body>
+</html>
