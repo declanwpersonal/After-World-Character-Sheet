@@ -35,10 +35,14 @@ textarea{resize:vertical}
 .card{display:flex;gap:8px;margin-bottom:10px}
 .open{flex:1;flex-direction:column;align-items:flex-start;text-align:left;gap:2px;padding:10px 14px}
 .del{color:var(--bad)}.foot{display:flex;gap:10px;margin-top:20px}.warn{color:var(--bad)}
+select{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-size:16px;min-height:44px}
+details{margin:8px 0;border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--bg)}summary{cursor:pointer;min-height:32px;display:flex;align-items:center;gap:8px}
+.tx{white-space:pre-wrap;font-size:15px}details ul{padding-left:1.1rem;margin:6px 0}.pk{display:flex;flex-direction:column;align-items:flex-start;width:100%;text-align:left;margin:6px 0;gap:0}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 </style></head><body>
 <header><button id="back" hidden>Characters</button><h1 id="ttl">After World Characters</h1><span id="st"></span></header>
 <main id="list"></main>
 <main id="sheet" hidden></main>
+<script src="data.js"></script>
 <script src="app.js"></script>
 </body></html>
