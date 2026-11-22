@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<title>After World Character Sheet</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#12151c">
+<style>
+:root{--bg:#f4f5f7;--panel:#fff;--ink:#1d2230;--mute:#5c6475;--line:#d5d9e2;--acc:#2f5d8a;--bad:#a8322d;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#12151c;--panel:#1a1f2a;--ink:#e4e7ee;--mute:#9aa3b5;--line:#2c3342;--acc:#8fb8e6;--bad:#f08a84;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+:root{padding-bottom:env(safe-area-inset-bottom,0px)}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:calc(8px + env(safe-area-inset-top,0px)) 12px 8px;background:var(--panel);border-bottom:1px solid var(--line)}
+header h1{flex:1;margin:0;font:700 1.1rem Georgia,serif;color:var(--acc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#st{color:var(--mute);font-size:13px}
+button,.btn,input,textarea{font:inherit;color:var(--ink)}
+button,.btn{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 14px;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+button.pri{width:100%;background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:700;margin-bottom:12px}
+main{max-width:40rem;margin:0 auto;padding:12px 14px 60px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+h2{margin:0 0 8px;font:700 1.05rem Georgia,serif;color:var(--acc)}
+.f{display:block;margin:8px 0}.f span{display:block;font-size:13px;color:var(--mute);margin-bottom:2px}
+input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-size:16px}
+textarea{resize:vertical}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g3{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px}
+.row{display:flex;align-items:center;gap:8px;margin:6px 0}.an{width:6.2rem;font-weight:600}
+.st{display:flex;align-items:center;gap:6px}.st b{min-width:2ch;text-align:center;font-size:1.2rem}
+.st button{width:44px;padding:0;font-size:1.3rem}
+.die{flex:1;color:var(--mute);font-size:14px}.roll{margin-left:auto}
+.wd{display:flex;gap:8px}.wd button{width:44px;padding:0}.wd button.on{background:var(--bad);border-color:var(--bad);color:var(--bg);font-weight:700}
+.meta{color:var(--mute);font-size:14px;margin:4px 0}.over{color:var(--bad);font-weight:700}
+.res{margin:6px 0 0;padding:10px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-weight:600}
+.big{display:flex;gap:10px;margin-bottom:6px}.big div{flex:1;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px}
+.big b{display:block;font:700 2rem Georgia,serif;color:var(--acc)}.big span{font-size:13px;color:var(--mute)}
+.card{display:flex;gap:8px;margin-bottom:10px}
+.open{flex:1;flex-direction:column;align-items:flex-start;text-align:left;gap:2px;padding:10px 14px}
+.del{color:var(--bad)}.foot{display:flex;gap:10px;margin-top:20px}.warn{color:var(--bad)}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+</style></head><body>
+<header><button id="back" hidden>Characters</button><h1 id="ttl">After World Characters</h1><span id="st"></span></header>
+<main id="list"></main>
+<main id="sheet" hidden></main>
+<script src="app.js"></script>
+</body></html>
